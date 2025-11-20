@@ -1,49 +1,54 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { User, Target } from 'lucide-react'
-import type { FormData } from '@/types'
+import { useState } from "react";
+import { User, Target } from "lucide-react";
+import type { FormData } from "@/types";
 
 interface FitnessFormProps {
-  onSubmit: (data: FormData) => void
-  loading: boolean
+  onSubmit: (data: FormData) => void;
+  loading: boolean;
 }
 
 export default function FitnessForm({ onSubmit, loading }: FitnessFormProps) {
   const [formData, setFormData] = useState<FormData>({
-    name: '',
-    age: '',
-    gender: '',
-    height: '',
-    weight: '',
-    goal: '',
-    level: '',
-    location: '',
-    diet: '',
-    medical: '',
-    stress: ''
-  })
+    name: "",
+    age: "",
+    gender: "",
+    height: "",
+    weight: "",
+    goal: "",
+    level: "",
+    location: "",
+    diet: "",
+    medical: "",
+    stress: "",
+  });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!formData.name || !formData.age) {
-      alert('Please fill in required fields')
-      return
+      alert("Please fill in required fields");
+      return;
     }
-    onSubmit(formData)
-  }
+    onSubmit(formData);
+  };
 
   return (
-    <form onSubmit={handleSubmit} className="card-dark p-8 rounded-2xl shadow-2xl">
+    <form
+      onSubmit={handleSubmit}
+      className="card-dark p-8 rounded-2xl shadow-2xl"
+    >
       <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
         <User className="w-8 h-8 text-accent-purple" />
         Tell Us About Yourself
       </h2>
-      
+
       <div className="grid md:grid-cols-2 gap-6">
         <input
           name="name"
@@ -51,9 +56,9 @@ export default function FitnessForm({ onSubmit, loading }: FitnessFormProps) {
           onChange={handleInputChange}
           placeholder="Full Name *"
           required
-          className="p-4 rounded-xl bg-[#0f0f0f] border-2 border-gray-800 focus:border-accent-purple outline-none transition"
+          className="p-4 rounded-xl bg-primary border-2 border-gray-800 focus:border-accent-purple outline-none transition"
         />
-        
+
         <input
           name="age"
           value={formData.age}
@@ -61,14 +66,14 @@ export default function FitnessForm({ onSubmit, loading }: FitnessFormProps) {
           placeholder="Age *"
           type="number"
           required
-          className="p-4 rounded-xl bg-[#0f0f0f] border-2 border-gray-800 focus:border-accent-purple outline-none transition"
+          className="p-4 rounded-xl bg-primary border-2 border-gray-800 focus:border-accent-purple outline-none transition"
         />
-        
+
         <select
           name="gender"
           value={formData.gender}
           onChange={handleInputChange}
-          className="p-4 rounded-xl bg-[#0f0f0f] border-2 border-gray-800 focus:border-accent-purple outline-none transition"
+          className="p-4 rounded-xl bg-primary border-2 border-gray-800 focus:border-accent-purple outline-none transition"
         >
           <option value="">Select Gender</option>
           <option value="male">Male</option>
@@ -82,7 +87,7 @@ export default function FitnessForm({ onSubmit, loading }: FitnessFormProps) {
           onChange={handleInputChange}
           placeholder="Height (cm)"
           type="number"
-          className="p-4 rounded-xl bg-[#0f0f0f] border-2 border-gray-800 focus:border-accent-purple outline-none transition"
+          className="p-4 rounded-xl bg-primary border-2 border-gray-800 focus:border-accent-purple outline-none transition"
         />
 
         <input
@@ -91,14 +96,14 @@ export default function FitnessForm({ onSubmit, loading }: FitnessFormProps) {
           onChange={handleInputChange}
           placeholder="Weight (kg)"
           type="number"
-          className="p-4 rounded-xl bg-[#0f0f0f] border-2 border-gray-800 focus:border-accent-purple outline-none transition"
+          className="p-4 rounded-xl bg-primary border-2 border-gray-800 focus:border-accent-purple outline-none transition"
         />
 
         <select
           name="goal"
           value={formData.goal}
           onChange={handleInputChange}
-          className="p-4 rounded-xl bg-[#0f0f0f] border-2 border-gray-800 focus:border-accent-purple outline-none transition"
+          className="p-4 rounded-xl bg-primary border-2 border-gray-800 focus:border-accent-purple outline-none transition"
         >
           <option value="">Fitness Goal</option>
           <option value="weight-loss">Weight Loss</option>
@@ -111,7 +116,7 @@ export default function FitnessForm({ onSubmit, loading }: FitnessFormProps) {
           name="level"
           value={formData.level}
           onChange={handleInputChange}
-          className="p-4 rounded-xl bg-[#0f0f0f] border-2 border-gray-800 focus:border-accent-purple outline-none transition"
+          className="p-4 rounded-xl bg-primary border-2 border-gray-800 focus:border-accent-purple outline-none transition"
         >
           <option value="">Fitness Level</option>
           <option value="beginner">Beginner</option>
@@ -123,7 +128,7 @@ export default function FitnessForm({ onSubmit, loading }: FitnessFormProps) {
           name="location"
           value={formData.location}
           onChange={handleInputChange}
-          className="p-4 rounded-xl bg-[#0f0f0f] border-2 border-gray-800 focus:border-accent-purple outline-none transition"
+          className="p-4 rounded-xl bg-primary border-2 border-gray-800 focus:border-accent-purple outline-none transition"
         >
           <option value="">Workout Location</option>
           <option value="home">Home</option>
@@ -135,7 +140,7 @@ export default function FitnessForm({ onSubmit, loading }: FitnessFormProps) {
           name="diet"
           value={formData.diet}
           onChange={handleInputChange}
-          className="p-4 rounded-xl bg-[#0f0f0f] border-2 border-gray-800 focus:border-accent-purple outline-none transition"
+          className="p-4 rounded-xl bg-primary border-2 border-gray-800 focus:border-accent-purple outline-none transition"
         >
           <option value="">Dietary Preference</option>
           <option value="vegetarian">Vegetarian</option>
@@ -149,14 +154,14 @@ export default function FitnessForm({ onSubmit, loading }: FitnessFormProps) {
           value={formData.medical}
           onChange={handleInputChange}
           placeholder="Medical History (optional)"
-          className="p-4 rounded-xl bg-[#0f0f0f] border-2 border-gray-800 focus:border-accent-purple outline-none transition"
+          className="p-4 rounded-xl bg-primary border-2 border-gray-800 focus:border-accent-purple outline-none transition"
         />
 
         <select
           name="stress"
           value={formData.stress}
           onChange={handleInputChange}
-          className="p-4 rounded-xl bg-[#0f0f0f] border-2 border-gray-800 focus:border-accent-purple outline-none transition"
+          className="p-4 rounded-xl bg-primary border-2 border-gray-800 focus:border-accent-purple outline-none transition"
         >
           <option value="">Stress Level</option>
           <option value="low">Low</option>
@@ -183,5 +188,5 @@ export default function FitnessForm({ onSubmit, loading }: FitnessFormProps) {
         )}
       </button>
     </form>
-  )
+  );
 }

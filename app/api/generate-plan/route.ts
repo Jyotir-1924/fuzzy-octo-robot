@@ -6,7 +6,12 @@ export async function POST(request: NextRequest) {
     const formData = await request.json();
 
     const prompt = `
-      You are an expert fitness coach. Generate a detailed, personalized fitness plan for:
+      You are an expert fitness coach. Generate a detailed, personalized fitness plan.
+      Output must use these EXACT weekday names:
+      ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
+
+      For the workout.days array, ALWAYS use one of those 7 exact day names.
+
       Name: ${formData.name}
       Age: ${formData.age}, Gender: ${formData.gender}
       Height: ${formData.height}cm, Weight: ${formData.weight}kg
@@ -16,20 +21,17 @@ export async function POST(request: NextRequest) {
       Dietary Preference: ${formData.diet}
       ${formData.medical ? `Medical History: ${formData.medical}` : ""}
       ${formData.stress ? `Stress Level: ${formData.stress}` : ""}
-      Return ONLY a VALID JSON object with this structure:
-      
-      
+
+      Return ONLY valid JSON with this structure:
+
       {
-        "workout":
-        {
+        "workout": {
           "overview": "",
-          "days":
-          [
+          "days": [
             {
-              "day": "",
+              "day": "Monday",
               "focus": "",
-              "exercises":
-              [
+              "exercises": [
                 {
                   "name": "",
                   "sets": "",
@@ -41,41 +43,36 @@ export async function POST(request: NextRequest) {
             }
           ]
         },
-          "diet":
-          {
-            "overview": "",
-            "dailyCalories": "",
-            "meals":
-            {
-              "breakfast": [],
-              "lunch": [],
-              "dinner": [],
-              "snacks": []
-            }
-          },
+        "diet": {
+          "overview": "",
+          "dailyCalories": "",
+          "meals": {
+            "breakfast": [],
+            "lunch": [],
+            "dinner": [],
+            "snacks": []
+          }
+        },
         "tips":[]
       }
-                
 
-STRICT RULES:
-- No markdown
-- No backticks
-- No explanation
-- Return *only* valid JSON`;
+      STRICT RULES:
+      - No markdown
+      - No backticks
+      - No explanation
+      - Return *only* valid JSON
+      `
+    ;
 
-    
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
     const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-flash", 
+      model: "gemini-2.5-flash",
     });
 
-    
     const result = await model.generateContent(prompt);
 
-    
     const raw = result.response.text();
 
-    
     let cleaned = raw
       .replace(/```json/gi, "")
       .replace(/```/g, "")

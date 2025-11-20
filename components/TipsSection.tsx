@@ -1,53 +1,89 @@
-'use client'
+"use client";
 
-import { Sparkles, Download } from 'lucide-react'
+import { Sparkles, Download } from "lucide-react";
+import { jsPDF } from "jspdf";
 
 interface TipsSectionProps {
-  tips: string[]
+  tips: string[];
 }
 
 export default function TipsSection({ tips }: TipsSectionProps) {
   const exportToPDF = () => {
-    const planData = localStorage.getItem('fitnessPlan')
-    if (!planData) return
+    const planData = localStorage.getItem("fitnessPlan");
+    if (!planData) return;
 
     try {
-      const plan = JSON.parse(planData)
-      let content = `AI FITNESS COACH - PERSONALIZED PLAN\n\n`
-      content += `WORKOUT PLAN\n${plan.workout.overview}\n\n`
-      
+      const plan = JSON.parse(planData);
+
+      const pdf = new jsPDF({
+        unit: "pt",
+        format: "a4",
+      });
+
+      let y = 40;
+
+      const addText = (text: string, size = 12, bold = false) => {
+        pdf.setFontSize(size);
+        pdf.setFont("Helvetica", bold ? "bold" : "normal");
+
+        const lines = pdf.splitTextToSize(text, 530);
+        pdf.text(lines, 40, y);
+        y += lines.length * 16;
+        if (y > 760) {
+          pdf.addPage();
+          y = 40;
+        }
+      };
+
+      addText("AI FITNESS COACH - Personalized Fitness Plan", 20, true);
+      y += 10;
+
+      addText("WORKOUT PLAN", 16, true);
+      addText(plan.workout.overview);
+
       plan.workout.days.forEach((day: any) => {
-        content += `${day.day} - ${day.focus}\n`
+        addText(`\n${day.day} — ${day.focus}`, 14, true);
+
         day.exercises.forEach((ex: any) => {
-          content += `  • ${ex.name}: ${ex.sets} sets × ${ex.reps} reps (Rest: ${ex.rest})\n`
-        })
-        content += '\n'
-      })
+          addText(
+            `• ${ex.name}: ${ex.sets} sets × ${ex.reps} reps (Rest: ${ex.rest})`,
+            12
+          );
+        });
 
-      content += `\nDIET PLAN\n${plan.diet.overview}\n`
-      content += `Daily Calories: ${plan.diet.dailyCalories}\n\n`
-      content += `Breakfast: ${plan.diet.meals.breakfast.join(', ')}\n`
-      content += `Lunch: ${plan.diet.meals.lunch.join(', ')}\n`
-      content += `Dinner: ${plan.diet.meals.dinner.join(', ')}\n`
-      content += `Snacks: ${plan.diet.meals.snacks.join(', ')}\n\n`
-      
-      content += `TIPS & MOTIVATION\n`
+        y += 6;
+      });
+
+      y += 10;
+      addText("DIET PLAN", 16, true);
+      addText(plan.diet.overview);
+      addText(`Daily Calories: ${plan.diet.dailyCalories}`);
+
+      addText("\nBREAKFAST:", 14, true);
+      addText(plan.diet.meals.breakfast.join(", "));
+
+      addText("\nLUNCH:", 14, true);
+      addText(plan.diet.meals.lunch.join(", "));
+
+      addText("\nDINNER:", 14, true);
+      addText(plan.diet.meals.dinner.join(", "));
+
+      addText("\nSNACKS:", 14, true);
+      addText(plan.diet.meals.snacks.join(", "));
+
+      y += 10;
+      addText("TIPS & MOTIVATION", 16, true);
+
       plan.tips.forEach((tip: string, i: number) => {
-        content += `${i + 1}. ${tip}\n`
-      })
+        addText(`${i + 1}. ${tip}`);
+      });
 
-      const blob = new Blob([content], { type: 'text/plain' })
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = 'fitness-plan.txt'
-      a.click()
-      URL.revokeObjectURL(url)
+      pdf.save("Fitness-Coach-Plan.pdf");
     } catch (error) {
-      console.error('Error exporting plan:', error)
-      alert('Failed to export plan')
+      console.error("Error exporting PDF:", error);
+      alert("Failed to export plan");
     }
-  }
+  };
 
   return (
     <div className="card-dark p-8 rounded-2xl shadow-xl">
@@ -64,10 +100,13 @@ export default function TipsSection({ tips }: TipsSectionProps) {
           Export Plan
         </button>
       </div>
-      
+
       <ul className="space-y-4">
         {tips.map((tip, i) => (
-          <li key={i} className="flex items-start gap-4 p-4 rounded-lg bg-[#1a1a1a] border border-gray-800">
+          <li
+            key={i}
+            className="flex items-start gap-4 p-4 rounded-lg bg-[#1a1a1a] border border-gray-800"
+          >
             <span className="text-accent-purple font-bold text-xl mt-1">
               {i + 1}.
             </span>
@@ -76,5 +115,5 @@ export default function TipsSection({ tips }: TipsSectionProps) {
         ))}
       </ul>
     </div>
-  )
+  );
 }

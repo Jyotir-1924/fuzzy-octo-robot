@@ -1,24 +1,24 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { Sparkles } from 'lucide-react'
+import { useState, useEffect } from "react";
+import { Sparkles } from "lucide-react";
 
 export default function MotivationQuote() {
-  const [quote, setQuote] = useState<string>('Loading motivation...')
+  const [quote, setQuote] = useState<string>("Loading motivation...");
 
   useEffect(() => {
-    fetchQuote()
-  }, [])
+    fetchQuote();
+  }, []);
 
   const fetchQuote = async () => {
     try {
-      const response = await fetch('/api/generate-quote')
-      const data = await response.json()
-      setQuote(data.quote)
+      const response = await fetch("/api/generate-quote");
+      const data = await response.json();
+      setQuote(data.quote);
     } catch (error) {
-      setQuote('Your only limit is you. Push harder today!')
+      setQuote("Your only limit is you. Push harder today!");
     }
-  }
+  };
 
   return (
     <div className="mb-12 p-8 rounded-2xl gradient-purple shadow-xl">
@@ -28,5 +28,5 @@ export default function MotivationQuote() {
       </div>
       <p className="text-lg md:text-xl italic text-white/90">{quote}</p>
     </div>
-  )
+  );
 }
