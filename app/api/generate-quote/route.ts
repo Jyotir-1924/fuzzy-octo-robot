@@ -3,16 +3,16 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export async function GET() {
   try {
-    if (!process.env.GOOGLE_GENAI_API_KEY) {
+    if (!process.env.GEMINI_API_KEY) {
       return NextResponse.json(
         { quote: "Your only limit is you. Push harder today!" },
         { status: 200 }
       );
     }
 
-    const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENAI_API_KEY);
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-flash"
+      model: "gemini-2.5-flash",
     });
 
     const result = await model.generateContent(`
@@ -26,9 +26,6 @@ export async function GET() {
     return NextResponse.json({ quote: text });
   } catch (error) {
     console.error("Quote error:", error);
-    return NextResponse.json(
-      { quote: "No Pain, No Gain !" },
-      { status: 200 }
-    );
+    return NextResponse.json({ quote: "No Pain, No Gain !" }, { status: 200 });
   }
 }

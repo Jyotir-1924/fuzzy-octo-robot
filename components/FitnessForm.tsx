@@ -46,7 +46,7 @@ export default function FitnessForm({ onSubmit, loading }: FitnessFormProps) {
     >
       <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
         <User className="w-8 h-8 text-accent-purple" />
-        Tell Us About Yourself
+        Tell me about yourself
       </h2>
 
       <div className="grid md:grid-cols-2 gap-6">
@@ -54,7 +54,7 @@ export default function FitnessForm({ onSubmit, loading }: FitnessFormProps) {
           name="name"
           value={formData.name}
           onChange={handleInputChange}
-          placeholder="Full Name *"
+          placeholder="Full Name (required)"
           required
           className="p-4 rounded-xl bg-primary border-2 border-gray-800 focus:border-accent-purple outline-none transition"
         />
@@ -63,8 +63,9 @@ export default function FitnessForm({ onSubmit, loading }: FitnessFormProps) {
           name="age"
           value={formData.age}
           onChange={handleInputChange}
-          placeholder="Age *"
+          placeholder="Age (required)"
           type="number"
+          min={1}
           required
           className="p-4 rounded-xl bg-primary border-2 border-gray-800 focus:border-accent-purple outline-none transition"
         />
@@ -87,6 +88,7 @@ export default function FitnessForm({ onSubmit, loading }: FitnessFormProps) {
           onChange={handleInputChange}
           placeholder="Height (cm)"
           type="number"
+          min={1}
           className="p-4 rounded-xl bg-primary border-2 border-gray-800 focus:border-accent-purple outline-none transition"
         />
 
@@ -96,6 +98,7 @@ export default function FitnessForm({ onSubmit, loading }: FitnessFormProps) {
           onChange={handleInputChange}
           placeholder="Weight (kg)"
           type="number"
+          min={1}
           className="p-4 rounded-xl bg-primary border-2 border-gray-800 focus:border-accent-purple outline-none transition"
         />
 

@@ -61,18 +61,15 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-primary text-white">
       <div className="container mx-auto px-4 py-8 max-w-7xl">
-        <header className="flex justify-between items-center mb-12">
+        <header className="flex flex-col items-center mb-12 text-center">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-full gradient-purple flex items-center justify-center">
-              <Dumbbell className="w-7 h-7" />
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold">
-              <span className="bg-linear-to-r from-accent-purple to-accent-lavender bg-clip-text text-transparent">
-                AI Fitness Coach
-              </span>
+            <Dumbbell className="w-12 h-12" />
+            <h1 className="text-5xl md:text-7xl font-extrabold animated-gradient-text">
+              Athletiq AI
             </h1>
           </div>
         </header>
+
         <MotivationQuote />
         {step === "form" ? (
           <FitnessForm onSubmit={generatePlan} loading={loading} />

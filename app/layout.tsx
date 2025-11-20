@@ -9,7 +9,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "AI Fitness Coach",
+  title: "Athletiq AI",
   description: "Your personalized AI-powered fitness and nutrition assistant",
 };
 

@@ -115,3 +115,23 @@ html {
 .animate-glow {
   animation: dayButtonGlow 1.7s ease-in-out infinite;
 }
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animated-gradient-text {
+  background: linear-gradient(
+    90deg,
+    #7F55B1,
+    #9B7EBD,
+    #F49BAB,
+    #FFE1E0
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientMove 6s ease infinite;
+}

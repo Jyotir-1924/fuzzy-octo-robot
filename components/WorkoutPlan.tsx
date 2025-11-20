@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Dumbbell, Play } from "lucide-react";
+import { Dumbbell, Play, Pause } from "lucide-react";
 import ImageModal from "./ImageModal";
 import type { Workout, ImageModalItem } from "@/types";
 
@@ -24,6 +24,7 @@ export default function WorkoutPlan({ workout }: WorkoutPlanProps) {
     useState<ImageModalItem | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedDay, setSelectedDay] = useState("Monday");
+  const [isSpeaking, setIsSpeaking] = useState(false);
 
   const handleExerciseClick = async (exerciseName: string) => {
     setIsLoading(true);
@@ -55,9 +56,39 @@ export default function WorkoutPlan({ workout }: WorkoutPlanProps) {
     (day) => day.day.toLowerCase() === selectedDay.toLowerCase()
   );
 
-  const speakPlan = () => {
-    const text = `Workout plan for ${selectedDay}. ${todaysWorkout?.focus}.`;
-    speechSynthesis.speak(new SpeechSynthesisUtterance(text));
+  const toggleSpeak = () => {
+    if (isSpeaking) {
+      speechSynthesis.cancel();
+      setIsSpeaking(false);
+      return;
+    }
+
+    if (!todaysWorkout) {
+      const msg = new SpeechSynthesisUtterance(
+        `There is no workout scheduled for ${selectedDay}.`
+      );
+      msg.rate = 0.95;
+      speechSynthesis.speak(msg);
+      setIsSpeaking(true);
+
+      msg.onend = () => setIsSpeaking(false);
+      return;
+    }
+
+    let text = `Workout plan for ${selectedDay}. `;
+    text += `Focus area: ${todaysWorkout.focus}. `;
+
+    todaysWorkout.exercises.forEach((ex) => {
+      text += `${ex.name}. ${ex.sets} sets of ${ex.reps} reps. `;
+      text += `Rest time: ${ex.rest}. `;
+      if (ex.notes) text += `${ex.notes}. `;
+    });
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 0.95;
+    speechSynthesis.speak(utterance);
+    setIsSpeaking(true);
+    utterance.onend = () => setIsSpeaking(false);
   };
 
   return (
@@ -69,11 +100,20 @@ export default function WorkoutPlan({ workout }: WorkoutPlanProps) {
             Workout Plan
           </h2>
           <button
-            onClick={speakPlan}
-            className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
+            onClick={toggleSpeak}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition font-semibold 
+            ${
+              isSpeaking
+                ? "bg-red-600 hover:bg-red-700 text-white"
+                : "bg-green-600 hover:bg-green-700 text-white"
+            }`}
           >
-            <Play className="w-5 h-5" />
-            Listen
+            {isSpeaking ? (
+              <Pause className="w-5 h-5" />
+            ) : (
+              <Play className="w-5 h-5" />
+            )}
+            {isSpeaking ? "Stop" : "Listen"}
           </button>
         </div>
         <div className="flex flex-wrap gap-2 mb-6">
