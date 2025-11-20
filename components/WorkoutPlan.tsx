@@ -84,8 +84,8 @@ export default function WorkoutPlan({ workout }: WorkoutPlanProps) {
               className={[
                 "px-4 py-1 rounded-full border text-sm transition-all duration-300 animate-day-button",
                 selectedDay === day
-                  ? "bg-gradient-to-r from-[#7F55B1] to-[#F49BAB] text-white border-transparent shadow-md scale-105 animate-glow"
-                  : "bg-[#0f0f0f] border-gray-700 text-gray-300 hover:border-accent-purple hover:scale-105 hover:text-white",
+                  ? "bg-linear-to-r from-accent-purple to-accent-pink text-white border-transparent shadow-md scale-105 animate-glow"
+                  : "bg-primary border-gray-700 text-gray-300 hover:border-accent-purple hover:scale-105 hover:text-white",
               ].join(" ")}
             >
               {day}
