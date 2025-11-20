@@ -1,47 +1,59 @@
 import { NextRequest, NextResponse } from "next/server";
+import { GoogleGenAI } from "@google/genai";
 
 export async function POST(request: NextRequest) {
   try {
+    if (!process.env.GEMINI_API_KEY) {
+      return NextResponse.json(
+        { error: "API key not configured" },
+        { status: 500 }
+      );
+    }
+
     const { item, type } = await request.json();
 
     const prompt =
       type === "meal"
-        ? `Describe what a dish of ${item} typically looks like in 4 to 5 lines. 
-           Include presentation, colors, textures, and overall appearance.`
-        : `Describe in 4 to 5 lines what a person performing ${item} exercise looks like. 
-           Include body position, environment, and how the movement looks visually.`;
+        ? `Generate a high-quality, professional food photography image of ${item}. Show the meal beautifully plated with garnishes and natural lighting. Restaurant quality presentation.`
+        : `Generate a high-quality, professional fitness photography image of a person performing ${item} exercise. Show proper form and technique in a gym environment.`;
 
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          contents: [
-            {
-              role: "user",
-              parts: [{ text: prompt }],
-            },
-          ],
-        }),
-      }
-    );
+    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-    const data = await response.json();
+    const response = await ai.models.generateImages({
+      model: "imagen-4.0-generate-001",
+      prompt: prompt,
+      config: {
+        numberOfImages: 1,
+        aspectRatio: "1:1",
+      },
+    });
 
-    const text =
-      data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || null;
+    if (
+      !response ||
+      !response.generatedImages ||
+      response.generatedImages.length === 0
+    ) {
+      throw new Error("No image generated");
+    }
 
-    if (!text) throw new Error("Empty description");
+    const image = response.generatedImages[0].image;
+    if (!image || !image.imageBytes) {
+      throw new Error("Image data not available");
+    }
+    const imageBytes = image.imageBytes;
+    const imageUrl = `data:image/png;base64,${imageBytes}`;
 
-    return NextResponse.json({ description: text });
+    return NextResponse.json({
+      imageUrl,
+      description: prompt,
+    });
   } catch (error) {
-    console.error("Description generation error:", error);
-    return NextResponse.json(
-      { error: "Failed to generate description" },
-      { status: 500 }
-    );
+    console.error("Image generation error:", error);
+
+    return NextResponse.json({
+      imageUrl: null,
+      description: "Image generation currently unavailable",
+      error: error instanceof Error ? error.message : "Unknown error",
+    });
   }
 }

@@ -24,10 +24,16 @@ export default function DietPlan({ diet }: DietPlanProps) {
       const data = await response.json();
       setSelectedMeal({
         title: mealName,
-        description: data.description,
+        description: data.description || "No description available",
+        imageUrl: data.imageUrl || null,
       });
     } catch (error) {
       console.error("Error:", error);
+      setSelectedMeal({
+        title: mealName,
+        description: "Failed to generate image",
+        imageUrl: null,
+      });
     }
     setIsLoading(false);
   };
@@ -79,7 +85,7 @@ export default function DietPlan({ diet }: DietPlanProps) {
                   <div
                     key={i}
                     onClick={() => handleMealClick(item)}
-                    className="p-3 rounded-lg bg-[#0f0f0f] border border-gray-800 hover:border-accent-pink cursor-pointer transition-all hover:shadow-lg hover:shadow-accent-pink/20"
+                    className="p-3 rounded-lg bg-primary border border-gray-800 hover:border-accent-pink cursor-pointer transition-all hover:shadow-lg hover:shadow-accent-pink/20"
                   >
                     {item}
                   </div>

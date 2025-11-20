@@ -67,7 +67,7 @@ export default function Home() {
               <Dumbbell className="w-7 h-7" />
             </div>
             <h1 className="text-4xl md:text-5xl font-bold">
-              <span className="bg-gradient-to-r from-accent-purple to-accent-lavender bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-accent-purple to-accent-lavender bg-clip-text text-transparent">
                 AI Fitness Coach
               </span>
             </h1>

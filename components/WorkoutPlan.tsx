@@ -25,10 +25,16 @@ export default function WorkoutPlan({ workout }: WorkoutPlanProps) {
       const data = await response.json();
       setSelectedExercise({
         title: exerciseName,
-        description: data.description,
+        description: data.description || "No description available",
+        imageUrl: data.imageUrl || null,
       });
     } catch (error) {
       console.error("Error:", error);
+      setSelectedExercise({
+        title: exerciseName,
+        description: "Failed to generate image",
+        imageUrl: null,
+      });
     }
     setIsLoading(false);
   };
@@ -83,7 +89,7 @@ export default function WorkoutPlan({ workout }: WorkoutPlanProps) {
                   <div
                     key={i}
                     onClick={() => handleExerciseClick(ex.name)}
-                    className="p-4 rounded-lg bg-[#0f0f0f] border border-gray-800 hover:border-accent-purple cursor-pointer transition-all hover:shadow-lg hover:shadow-accent-purple/20"
+                    className="p-4 rounded-lg bg-primary border border-gray-800 hover:border-accent-purple cursor-pointer transition-all hover:shadow-lg hover:shadow-accent-purple/20"
                   >
                     <h4 className="font-semibold text-lg mb-1">{ex.name}</h4>
                     <p className="text-sm text-gray-400">

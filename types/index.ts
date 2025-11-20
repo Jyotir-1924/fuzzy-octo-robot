@@ -53,4 +53,5 @@ export interface FitnessPlan {
 export interface ImageModalItem {
   title: string
   description: string
+  imageUrl?: string | null
 }
