@@ -144,6 +144,13 @@ export default function WorkoutPlan({ workout }: WorkoutPlanProps) {
             <p className="text-sm text-accent-purple mb-4 font-semibold">
               Focus: {todaysWorkout.focus}
             </p>
+            <p className="text-sm mb-4  text-gray-300">
+              Click on any item to view an{" "}
+              <span className="font-bold bg-linear-to-r from-accent-purple via-accent-pink to-accent-peach text-transparent animated-gradient-text">
+                AI-generated
+              </span>{" "}
+              sample image
+            </p>
 
             <div className="space-y-3">
               {todaysWorkout.exercises.map((ex, i) => (

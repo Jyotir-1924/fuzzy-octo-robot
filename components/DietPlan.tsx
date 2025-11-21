@@ -13,7 +13,7 @@ export default function DietPlan({ diet }: DietPlanProps) {
   const [selectedMeal, setSelectedMeal] = useState<ImageModalItem | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
-
+  
   const handleMealClick = async (mealName: string) => {
     setIsLoading(true);
     try {
@@ -66,7 +66,6 @@ export default function DietPlan({ diet }: DietPlanProps) {
             <Utensils className="w-8 h-8" />
             Diet Plan
           </h2>
-
           <button
             onClick={toggleSpeak}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg transition font-semibold 
@@ -84,12 +83,17 @@ export default function DietPlan({ diet }: DietPlanProps) {
             {isSpeaking ? "Stop" : "Listen"}
           </button>
         </div>
-
         <p className="mb-4 text-lg text-gray-300">{diet.overview}</p>
-        <p className="mb-8 font-bold text-2xl text-accent-peach">
+        <p className="mb-2 font-bold text-2xl text-accent-peach">
           Daily Calories: {diet.dailyCalories}
         </p>
-
+        <p className="text-sm mb-4 text-gray-300">
+          Click on any item to view an{" "}
+          <span className="font-bold bg-linear-to-r from-[#7F55B1] via-[#F49BAB] to-[#FFE1E0] text-transparent animated-gradient-text">
+            AI-generated
+          </span>{" "}
+          sample image
+        </p>
         <div className="grid md:grid-cols-2 gap-6">
           {Object.entries(diet.meals).map(([meal, items]) => (
             <div
@@ -115,7 +119,6 @@ export default function DietPlan({ diet }: DietPlanProps) {
           ))}
         </div>
       </div>
-
       {(selectedMeal || isLoading) && (
         <ImageModal
           item={selectedMeal}

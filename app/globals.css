@@ -2,10 +2,10 @@
 
 @theme {
   --color-primary: #0f0f0f;
-  --color-accent-purple: #7F55B1;
-  --color-accent-lavender: #9B7EBD;
-  --color-accent-pink: #F49BAB;
-  --color-accent-peach: #FFE1E0;
+  --color-accent-purple: #7f55b1;
+  --color-accent-lavender: #9b7ebd;
+  --color-accent-pink: #f49bab;
+  --color-accent-peach: #ffe1e0;
   --font-sans: var(--font-montserrat), sans-serif;
 }
 
@@ -16,25 +16,24 @@ body {
 
 @layer utilities {
   .gradient-purple {
-    background: linear-gradient(135deg, var(--color-accent-purple) 0%, var(--color-accent-lavender) 100%);
+    background: linear-gradient(
+      135deg,
+      var(--color-accent-purple) 0%,
+      var(--color-accent-lavender) 100%
+    );
   }
-  
-  .gradient-pink {
-    background: linear-gradient(135deg, var(--color-accent-pink) 0%, var(--color-accent-peach) 100%);
-  }
-  
+
   .card-dark {
     background-color: #1a1a1a;
     border: 1px solid #2a2a2a;
   }
-  
+
   .btn-primary {
-    background: linear-gradient(135deg, var(--color-accent-purple) 0%, var(--color-accent-lavender) 100%);
-  }
-  
-  .btn-secondary {
-    background: linear-gradient(135deg, var(--color-accent-pink) 0%, var(--color-accent-peach) 100%);
-    color: var(--color-primary);
+    background: linear-gradient(
+      135deg,
+      var(--color-accent-purple) 0%,
+      var(--color-accent-lavender) 100%
+    );
   }
 }
 
@@ -57,20 +56,6 @@ html {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-accent-lavender);
-}
-
-.animated-heading {
-  background-image: linear-gradient(
-    90deg,
-    #7f55b1,
-    #9b7ebd,
-    #f49bab,
-    #ffe1e0
-  );
-  background-size: 300% 300%;
-  -webkit-background-clip: text;
-  color: transparent;
-  animation: gradient-move 6s ease-in-out infinite;
 }
 
 @keyframes gradient-move {
@@ -117,21 +102,85 @@ html {
 }
 
 @keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .animated-gradient-text {
-  background: linear-gradient(
-    90deg,
-    #7F55B1,
-    #9B7EBD,
-    #F49BAB,
-    #FFE1E0
-  );
+  background: linear-gradient(90deg, #7f55b1, #9b7ebd, #f49bab, #ffe1e0);
   background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: gradientMove 6s ease infinite;
+}
+
+.animated-gradient-text {
+  background: linear-gradient(90deg, #7f55b1, #9b7ebd, #f49bab, #ffe1e0);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gradientShift 6s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+}
+
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(15px);
+  animation: fadeInUp 1s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes softBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+.animate-soft-bounce {
+  animation: softBounce 3s ease-in-out infinite;
+}
+
+@keyframes pulseSlow {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+.animate-pulse-slow {
+  animation: pulseSlow 6s ease-in-out infinite;
 }
