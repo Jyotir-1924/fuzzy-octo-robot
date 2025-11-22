@@ -44,7 +44,7 @@ export default function FitnessForm({ onSubmit, loading }: FitnessFormProps) {
       onSubmit={handleSubmit}
       className="card-dark p-8 rounded-2xl shadow-2xl"
     >
-      <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
+      <h2 className="font-bold mb-6 flex items-center gap-3 text-xl md:text-3xl">
         <User className="w-8 h-8 text-accent-purple" />
         Tell me about yourself
       </h2>
@@ -152,14 +152,6 @@ export default function FitnessForm({ onSubmit, loading }: FitnessFormProps) {
           <option value="keto">Keto</option>
         </select>
 
-        <input
-          name="medical"
-          value={formData.medical}
-          onChange={handleInputChange}
-          placeholder="Medical History (optional)"
-          className="p-4 rounded-xl bg-primary border-2 border-gray-800 focus:border-accent-purple outline-none transition"
-        />
-
         <select
           name="stress"
           value={formData.stress}
@@ -176,12 +168,18 @@ export default function FitnessForm({ onSubmit, loading }: FitnessFormProps) {
       <button
         type="submit"
         disabled={loading}
-        className="mt-8 w-full py-4 btn-primary text-white rounded-xl font-semibold text-lg hover:shadow-lg hover:shadow-accent-purple/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+        className="mt-8 w-full py-4 btn-primary text-white rounded-xl font-semibold 
+  hover:shadow-lg hover:shadow-accent-purple/50 transition-all 
+  disabled:opacity-50 disabled:cursor-not-allowed flex items-center 
+  justify-center gap-3 md:text-lg"
       >
         {loading ? (
           <>
             <div className="w-6 h-6 border-3 border-white border-t-transparent rounded-full animate-spin"></div>
-            Generating Your Personalized Plan...
+            <span className="md:hidden">In progress</span>
+            <span className="hidden md:inline">
+              Generating Your Personalized Plan
+            </span>
           </>
         ) : (
           <>

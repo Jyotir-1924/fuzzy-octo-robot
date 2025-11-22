@@ -7,17 +7,16 @@ interface TipsSectionProps {
 }
 
 export default function TipsSection({ tips }: TipsSectionProps) {
-
   return (
-    <div className="card-dark p-8 rounded-2xl shadow-xl">
-      <div className="flex justify-between items-center mb-6">
+    <div className="card-dark p-1 rounded-2xl shadow-xl">
+      <div className="flex justify-center items-center mb-6 p-4">
         <h2 className="text-3xl font-bold flex items-center gap-3 text-accent-peach">
           <Sparkles className="w-8 h-8" />
           Tips & Motivation
         </h2>
       </div>
 
-      <ul className="space-y-4">
+      <ul className="space-y-4 mb-4">
         {tips.map((tip, i) => (
           <li
             key={i}
