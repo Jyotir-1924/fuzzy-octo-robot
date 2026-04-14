@@ -60,6 +60,7 @@ export async function POST(request: NextRequest) {
       - No markdown
       - No backticks
       - No explanation
+      - No text formatting
       - Return *only* valid JSON
       `
     ;
