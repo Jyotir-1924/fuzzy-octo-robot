@@ -25,7 +25,7 @@ export default function FitnessForm({ onSubmit, loading }: FitnessFormProps) {
   });
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -46,7 +46,7 @@ export default function FitnessForm({ onSubmit, loading }: FitnessFormProps) {
     >
       <h2 className="font-bold mb-6 flex items-center gap-3 text-xl md:text-3xl">
         <User className="w-8 h-8 text-accent-purple" />
-        Tell me about yourself
+        Tell us about yourself
       </h2>
 
       <div className="grid md:grid-cols-2 gap-6">
@@ -72,6 +72,7 @@ export default function FitnessForm({ onSubmit, loading }: FitnessFormProps) {
 
         <select
           name="gender"
+          required
           value={formData.gender}
           onChange={handleInputChange}
           className="p-4 rounded-xl bg-primary border-2 border-gray-800 focus:border-accent-purple outline-none transition"
@@ -89,6 +90,7 @@ export default function FitnessForm({ onSubmit, loading }: FitnessFormProps) {
           placeholder="Height (cm)"
           type="number"
           min={1}
+          required
           className="p-4 rounded-xl bg-primary border-2 border-gray-800 focus:border-accent-purple outline-none transition"
         />
 
@@ -98,6 +100,7 @@ export default function FitnessForm({ onSubmit, loading }: FitnessFormProps) {
           onChange={handleInputChange}
           placeholder="Weight (kg)"
           type="number"
+          required
           min={1}
           className="p-4 rounded-xl bg-primary border-2 border-gray-800 focus:border-accent-purple outline-none transition"
         />
@@ -106,6 +109,7 @@ export default function FitnessForm({ onSubmit, loading }: FitnessFormProps) {
           name="goal"
           value={formData.goal}
           onChange={handleInputChange}
+          required
           className="p-4 rounded-xl bg-primary border-2 border-gray-800 focus:border-accent-purple outline-none transition"
         >
           <option value="">Fitness Goal</option>
@@ -119,6 +123,7 @@ export default function FitnessForm({ onSubmit, loading }: FitnessFormProps) {
           name="level"
           value={formData.level}
           onChange={handleInputChange}
+          required
           className="p-4 rounded-xl bg-primary border-2 border-gray-800 focus:border-accent-purple outline-none transition"
         >
           <option value="">Fitness Level</option>
@@ -131,6 +136,7 @@ export default function FitnessForm({ onSubmit, loading }: FitnessFormProps) {
           name="location"
           value={formData.location}
           onChange={handleInputChange}
+          required
           className="p-4 rounded-xl bg-primary border-2 border-gray-800 focus:border-accent-purple outline-none transition"
         >
           <option value="">Workout Location</option>
@@ -143,6 +149,7 @@ export default function FitnessForm({ onSubmit, loading }: FitnessFormProps) {
           name="diet"
           value={formData.diet}
           onChange={handleInputChange}
+          required
           className="p-4 rounded-xl bg-primary border-2 border-gray-800 focus:border-accent-purple outline-none transition"
         >
           <option value="">Dietary Preference</option>
